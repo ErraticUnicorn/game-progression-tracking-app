@@ -10,6 +10,16 @@ namespace :docker do
   task :test do |t, args|
     test_args = ARGV[1..-1].join(" ")
     sh "docker exec elevate_labs_take_home-web-1 bash -c 'cd /rails && bin/rails test #{test_args}'"
-    exit 0 
+    exit 0
+  end
+
+  desc "Seed the database in the Docker container"
+  task :seed do
+    sh "docker exec elevate_labs_take_home-web-1 bash -c 'cd /rails && bin/rails db:seed'"
+  end
+
+  desc "Seed the test database in the Docker container"
+  task :test_seed do
+    sh "docker exec elevate_labs_take_home-web-1 bash -c 'cd /rails && RAILS_ENV=test bin/rails db:seed'"
   end
 end

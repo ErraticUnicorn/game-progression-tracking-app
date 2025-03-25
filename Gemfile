@@ -7,8 +7,8 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # API Authentication
-gem 'bcrypt', '~> 3.1.7'
-gem 'jwt'
+gem "bcrypt", "~> 3.1.7"
+gem "jwt"
 
 # CORS for API access
 # gem "rack-cors" needed?
