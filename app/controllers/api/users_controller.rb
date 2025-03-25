@@ -3,6 +3,7 @@ module Api
     skip_before_action :authenticate_request, only: [:create]
     
     # POST /api/user
+    # In production, we would want to guarantee we are forcing SSL
     def create
       @user = User.new(user_params)
       

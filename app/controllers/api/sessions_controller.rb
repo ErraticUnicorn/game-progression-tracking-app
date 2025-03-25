@@ -8,7 +8,14 @@ module Api
       
       if @user&.authenticate(params[:password])
         token = JsonWebToken.encode(user_id: @user.id)
-        render json: { token: token }, status: :ok
+        time = Time.now + 24.hours.to_i
+        
+        render json: { 
+          token: token,
+          exp: time.strftime("%m-%d-%Y %H:%M"),
+          email: @user.email,
+          user_id: @user.id
+        }, status: :ok
       else
         render json: { error: 'Invalid credentials' }, status: :unauthorized
       end
