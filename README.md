@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Greetings, 
 
-Things you may want to cover:
+Within is a simple ruby on rails app.
 
-* Ruby version
+## Dependecies
 
-* System dependencies
+Ensure you have ruby, and ruby on rails installed. This can be done by following this guide:
+https://gorails.com/setup/
 
-* Configuration
+Ensure you have Docker Compose usable
 
-* Database creation
+## Local Dev
 
-* Database initialization
+After cloning the repository get started with docker compose:
 
-* How to run the test suite
+`docker-compose build` followed by `docker-compose up -d`
 
-* Services (job queues, cache servers, search engines, etc.)
+The API will be available at `http://localhost:3000`
 
-* Deployment instructions
+## Running tests
 
-* ...
+To run tests simply run `rake docker:test` which assumes your running container has the name `elevate_labs_take_home-web-1`
+
+## Postman Collection
+
+To interact with the API, a postman collection is provided as `game_completion_api_postman_collection.json`. Import this into Postman and one should be able to interact with the API pretty immediately.
