@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "791fd167-5f77-4bb4-9627-8f87759cb9b2",
+		"name": "Game Completion API",
+		"description": "A RESTful API for user authentication and game completion tracking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8385364"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register New User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": {\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "Register a new user with email and password"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.token) {",
+									"    pm.collectionVariables.set(\"auth_token\", jsonData.token);",
+									"    console.log(\"Token saved to collection variable\");",
+									"} else {",
+									"    console.log(\"No token found in response\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sessions"
+							]
+						},
+						"description": "Login with email and password to receive JWT token"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for user registration and login"
+		},
+		{
+			"name": "Game Events",
+			"item": [
+				{
+					"name": "Submit Game Completion",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Get the token from collection variables",
+									"const token = pm.collectionVariables.get('auth_token');",
+									"",
+									"// If there's no token, we should prompt the user to log in first",
+									"if (!token) {",
+									"    console.log(\"No auth token found. Please run the Login request first.\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"game_event\": {\n    \"game_id\": 1,\n    \"type\": \"COMPLETED\",\n    \"occurred_at\": \"{{$isoTimestamp}}\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/game_events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"game_events"
+							]
+						},
+						"description": "Submit a game completion event"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Game Completion - Invalid Game",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Get the token from collection variables",
+									"const token = pm.collectionVariables.get('auth_token');",
+									"",
+									"// If there's no token, we should prompt the user to log in first",
+									"if (!token) {",
+									"    console.log(\"No auth token found. Please run the Login request first.\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"game_event\": {\n    \"game_id\": 999,\n    \"type\": \"COMPLETED\",\n    \"occurred_at\": \"{{$isoTimestamp}}\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/game_events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"game_events"
+							]
+						},
+						"description": "Attempt to submit a completion for a non-existent game"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Game Completion - Missing Data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Get the token from collection variables",
+									"const token = pm.collectionVariables.get('auth_token');",
+									"",
+									"// If there's no token, we should prompt the user to log in first",
+									"if (!token) {",
+									"    console.log(\"No auth token found. Please run the Login request first.\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"game_event\": {\n    \"game_id\": 1,\n    \"type\": \"COMPLETED\"\n    // Missing occurred_at field\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/game_events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"game_events"
+							]
+						},
+						"description": "Submit an incomplete game completion event (missing occurred_at)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for reporting and managing game events"
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Get User Details",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Get the token from collection variables",
+									"const token = pm.collectionVariables.get('auth_token');",
+									"",
+									"// If there's no token, we should prompt the user to log in first",
+									"if (!token) {",
+									"    console.log(\"No auth token found. Please run the Login request first.\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "Get user details including game statistics"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

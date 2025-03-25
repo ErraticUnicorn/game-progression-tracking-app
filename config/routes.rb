@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   namespace :api do
-    resource :user, only: [ :create ] do
+    resource :user, only: [ :create, :show ] do
       resources :game_events, only: [ :create ]
     end
     resources :sessions, only: [ :create ]

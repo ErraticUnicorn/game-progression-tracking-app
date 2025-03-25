@@ -18,6 +18,17 @@ module Api
       end
     end
 
+    def show
+      # Format the response according to Phase 3 requirements
+      render json: {
+        user: {
+          id: current_user.id,
+          email: current_user.email,
+          stats: current_user.stats
+        }
+      }
+    end
+
     private
 
     def user_params
