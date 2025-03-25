@@ -15,9 +15,6 @@ gem "prometheus-client"
 gem "yabeda-prometheus"
 gem "yabeda-rails"
 
-# CORS for API access
-# gem "rack-cors" needed?
-
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
