@@ -9,7 +9,7 @@ module Api
 
       if @user.save
         Yabeda.user_registrations_total.increment({})
-        
+
         render json: {
           id: @user.id,
           email: @user.email,
@@ -25,10 +25,10 @@ module Api
       stats_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
       user_stats = current_user.stats
       stats_duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - stats_start
-      
+
       # Record stats processing duration
       Yabeda.stats_processing_duration_seconds.measure({}, stats_duration)
-      
+
       render json: {
         user: {
           id: current_user.id,
