@@ -20,13 +20,16 @@ After cloning the repository get started with docker compose:
 
 The API will be available at `http://localhost:3000`
 
+The db startup script may need permissions to run on your machine, if so run this command:
+`chmod +x script/db_startup.sh`
+
 ## Running tests
 
 To run tests simply run `rake docker:test` which assumes your running container has the name `elevate_labs_take_home-web-1`
 
 ## Metrics
 
-This application provides Prometheus metrics to monitor its performance. The metrics endpoint is available at `/metrics`.
+This application provides Prometheus metrics to monitor its performance. The metrics endpoint is available at `/metrics`. To view in the browser visit: `http://localhost:3000/metrics`
 
 ### Available Metrics
   - `game_events_total`: Total game events by type
