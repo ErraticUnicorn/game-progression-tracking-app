@@ -23,6 +23,8 @@ The API will be available at `http://localhost:3000`
 The db startup script may need permissions to run on your machine, if so run this command:
 `chmod +x script/db_startup.sh`
 
+Run `rake docker:seed` to add a game to the database.
+
 ## Running tests
 
 To run tests simply run `rake docker:test` which assumes your running container has the name `elevate_labs_take_home-web-1`
