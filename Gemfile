@@ -10,6 +10,11 @@ gem "bootsnap", require: false
 gem "bcrypt", "~> 3.1.7"
 gem "jwt"
 
+# Metrics and monitoring
+gem "prometheus-client"
+gem "yabeda-prometheus"
+gem "yabeda-rails"
+
 # CORS for API access
 # gem "rack-cors" needed?
 

@@ -23,6 +23,7 @@ module Api
       )
 
       if @event.save
+        Yabeda.game_events_total.increment({ event_type: event_type })
         render json: @event, status: :created
       else
         render json: { errors: @event.errors.full_messages },

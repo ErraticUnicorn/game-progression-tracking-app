@@ -13,4 +13,7 @@ Rails.application.routes.draw do
     end
     resources :sessions, only: [ :create ]
   end
+
+  # On a production environment we would need admin creds
+  mount Yabeda::Prometheus::Exporter => '/metrics'
 end

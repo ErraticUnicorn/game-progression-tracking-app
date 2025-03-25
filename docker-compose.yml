@@ -28,6 +28,7 @@ services:
       DB_PASSWORD: "password"
     ports:
       - "3000:3000"
+      - "9394:9394"
     volumes:
       - .:/rails
     entrypoint: ["/rails/script/db_startup.sh"]
