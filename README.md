@@ -44,3 +44,23 @@ This application provides Prometheus metrics to monitor its performance. The met
 ## API Documentation
 
 To interact with the API, a postman collection is provided as `game_completion_api_postman_collection.json`. Import this into Postman and one should be able to interact with the API pretty immediately.
+
+
+## TODO
+Scaling:
+- Move event creation to a queue due concureency concerns of event endpoint
+  - More event based architecture
+- Make events idempotent (allows replaying of events)
+- Can cache statistics
+- Split services into auth/user/game
+- Kubernetes load balancer
+- Database scaling -> read replicas or sharding
+  - separating write/read
+  - transactions to ensure consistency across microservices
+- More thorough unit tests
+- Load testing
+
+Product:
+- Leaderboard-esque app
+- Collect more game events
+- Ensure data is easy to collect, (cron jobs to sort data)
