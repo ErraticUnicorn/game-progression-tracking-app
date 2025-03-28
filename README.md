@@ -3,7 +3,7 @@
 Greetings, 
 
 Within is a simple ruby on rails app.
-The requirements are listed here: https://you.ashbyhq.com/elevate-labs/assignment/e84f611a-11a0-444c-996a-e1c7fba97530
+The requirements are listed here.
 
 ## Dependencies
 
